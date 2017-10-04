@@ -57,7 +57,7 @@ class CategoryController extends Controller
             ));
         }
 
-        return new Response("Incorrect data. Try create Person again.");
+        return new Response("Incorrect data. Try create Category again.");
 
 
     }

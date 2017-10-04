@@ -42,6 +42,11 @@ class Category
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity = "Task", mappedBy = "category")
+     */
+    private $tasks;
+
 
     /**
      * Get id
@@ -123,5 +128,46 @@ class Category
     public function getUser()
     {
         return $this->user;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add task
+     *
+     * @param \TaskPlannerBundle\Entity\Task $task
+     *
+     * @return Category
+     */
+    public function addTask(\TaskPlannerBundle\Entity\Task $task)
+    {
+        $this->tasks[] = $task;
+
+        return $this;
+    }
+
+    /**
+     * Remove task
+     *
+     * @param \TaskPlannerBundle\Entity\Task $task
+     */
+    public function removeTask(\TaskPlannerBundle\Entity\Task $task)
+    {
+        $this->tasks->removeElement($task);
+    }
+
+    /**
+     * Get tasks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTasks()
+    {
+        return $this->tasks;
     }
 }

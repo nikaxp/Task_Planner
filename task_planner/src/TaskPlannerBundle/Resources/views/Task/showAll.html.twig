@@ -1,0 +1,31 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}All Tasks{% endblock %}
+{% block body %}
+<ul>
+    {% for t in tasks %}
+        <li>
+            <a href="{{ path('showTask', {'id': t.getId()}) }}"><strong>{{ t.getName() }}</strong></a>
+
+            <button class = "btn btn-sm"
+                    onclick = "window.location.href='{{ path('editTask', {'id': t.getId()}) }}' "
+                    type="button"
+            >Edit</button>
+
+            <button class = "btn btn-sm"
+                    onclick = "window.location.href='{{ path('deleteTask', {'id': t.getId()}) }}' "
+            >Delete</button>
+
+        </li>
+    {% else %}
+        Sorry, there's no tasks :(
+    {% endfor %}
+</ul>
+    <div>
+        <button class = "btn btn-xs"
+                onclick = "window.location.href='{{ path('newTask') }}' "
+                type="button"
+        >New task</button>
+    </div>
+{% endblock %}
+

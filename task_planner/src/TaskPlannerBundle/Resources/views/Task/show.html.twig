@@ -1,0 +1,25 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Task{% endblock %}
+
+{% block body %}
+    <div>
+        {% if task.isDone == true %}
+            <h1><b> DONE </b></h1>
+        {% else %}
+            <h1><b>TO DO</b></h1>
+        {% endif %}
+        <h4>{{ task.name }}</h4>
+        <p><b>Description:</b> {{ task.description }}</p>
+        <p><b>Deadline:</b> {{ task.deadline|date('Y-m-d H:i:s') }}</p>
+        <p><b>Priority:</b> {{ task.priority }}</p>
+        {#<p><b>Category:</b> {{ task.category }}</p>#}
+        <a href="{{ path('editTask', {'id': task.id}) }}">Edit</a><br>
+    </div>
+    <div>
+        <button class = "btn "
+                onclick = "window.location.href='{{ path('showAllTasks') }}' "
+                type="button"
+        >Back to tasks</button>
+    </div>
+{% endblock %}

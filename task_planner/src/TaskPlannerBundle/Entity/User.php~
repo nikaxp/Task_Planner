@@ -24,10 +24,49 @@ class User extends BaseUser
      */
     private $categories;
 
+    /**
+     * @ORM\OneToMany(targetEntity = "Task", mappedBy = "user")
+     */
+    private $tasks;
+
 
     public function __construct()
     {
         parent::__construct();
     }
 
+
+    /**
+     * Add category
+     *
+     * @param \TaskPlannerBundle\Entity\Category $category
+     *
+     * @return User
+     */
+    public function addCategory(\TaskPlannerBundle\Entity\Category $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \TaskPlannerBundle\Entity\Category $category
+     */
+    public function removeCategory(\TaskPlannerBundle\Entity\Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
 }
