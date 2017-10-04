@@ -1,0 +1,19 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Category{% endblock %}
+
+{% block body %}
+    <div>
+        <h1>{{ category.name }}</h1>
+        <p><b>Description:</b> {{ category.description }}</p>
+        <a href="{{ path('editCategory', {'id': category.id}) }}">Edit</a><br>
+    </div>
+    <div>
+    <button class = "btn "
+            onclick = "window.location.href='{{ path('showAllCategories') }}' "
+            type="button"
+    >Back to categories</button>
+    </div>
+
+{% endblock %}
+

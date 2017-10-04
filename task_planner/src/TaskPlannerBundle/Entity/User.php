@@ -1,6 +1,6 @@
 <?php
 
-namespace UserStoryBundle\Entity;
+namespace TaskPlannerBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * User
  *
  * @ORM\Table(name="fos_user")
- * @ORM\Entity(repositoryClass="UserStoryBundle\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="TaskPlannerBundle\Repository\UserRepository")
  */
 class User extends BaseUser
 {
@@ -20,10 +20,9 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity = "Person", mappedBy = "user")
+     * @ORM\OneToMany(targetEntity = "Category", mappedBy = "user")
      */
-    private $people;
-
+    private $categories;
 
 
     public function __construct()
@@ -33,46 +32,36 @@ class User extends BaseUser
 
 
     /**
-     * Get id
+     * Add category
      *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Add person
-     *
-     * @param \UserStoryBundle\Entity\Person $person
+     * @param \TaskPlannerBundle\Entity\Category $category
      *
      * @return User
      */
-    public function addPerson(\UserStoryBundle\Entity\Person $person)
+    public function addCategory(\TaskPlannerBundle\Entity\Category $category)
     {
-        $this->people[] = $person;
+        $this->categories[] = $category;
 
         return $this;
     }
 
     /**
-     * Remove person
+     * Remove category
      *
-     * @param \UserStoryBundle\Entity\Person $person
+     * @param \TaskPlannerBundle\Entity\Category $category
      */
-    public function removePerson(\UserStoryBundle\Entity\Person $person)
+    public function removeCategory(\TaskPlannerBundle\Entity\Category $category)
     {
-        $this->people->removeElement($person);
+        $this->categories->removeElement($category);
     }
 
     /**
-     * Get people
+     * Get categories
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPeople()
+    public function getCategories()
     {
-        return $this->people;
+        return $this->categories;
     }
 }

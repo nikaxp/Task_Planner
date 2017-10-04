@@ -1,0 +1,31 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}All Categories{% endblock %}
+{% block body %}
+<ul>
+    {% for c in categories %}
+        <li>
+            <a href="{{ path('showCategory', {'id': c.getId()}) }}"><strong>{{ c.getName() }}</strong></a>
+
+            <button class = "btn btn-sm btn-warning "
+                    onclick = "window.location.href='{{ path('editCategory', {'id': c.getId()}) }}' "
+                    type="button"
+            >Edit</button>
+
+            <button class = "btn btn-sm btn-danger"
+                    onclick = "window.location.href='{{ path('deleteCategory', {'id': c.getId()}) }}' "
+            >Delete</button>
+
+        </li>
+    {% else %}
+        Sorry, there's no categories :(
+    {% endfor %}
+</ul>
+    <div>
+        <button class = "btn btn-xs btn-success"
+                onclick = "window.location.href='{{ path('newCategory') }}' "
+                type="button"
+        >New category</button>
+    </div>
+{% endblock %}
+
