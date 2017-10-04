@@ -1,7 +1,14 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}TaskPlannerBundle:Task:edit{% endblock %}
+{% block title %}Edit Task{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Task:edit page</h1>
+    <button class = "btn btn-xs "
+            onclick = "window.location.href='{{ path('showTask', {'id': task.id}) }}' "
+            type="button"
+    >Back to task</button>
+    <h2>Edit Task {{ task.name }}</h2>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
 {% endblock %}
