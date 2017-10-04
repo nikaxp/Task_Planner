@@ -1,0 +1,5 @@
+task_planner:
+    resource: "@TaskPlannerBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
