@@ -12,7 +12,7 @@ use TaskPlannerBundle\Form\CategoryType;
 use Symfony\Component\Form\Form;
 
 /**
- * Class TaskController
+ * Class CategoryController
  * @Route("/category")
  */
 

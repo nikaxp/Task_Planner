@@ -35,7 +35,7 @@ class Task
      * @ORM\Column(name="description", type="text", nullable = true)
      * @Assert\Length(
      *     max = 600,
-     *     maxMessage = "Description is too long. It shoul have {{ limit }} characters or less."
+     *     maxMessage = "Description is too long. It should have {{ limit }} characters or less."
      * )
      */
     private $description;
@@ -70,10 +70,14 @@ class Task
 
     /**
      * @ORM\ManyToOne(targetEntity = "User", inversedBy="tasks")
-     * @ORM\JoinColumn(name = "user_id", referencedColumnName = "id", nullable = true)
+     * @ORM\JoinColumn(name = "fos_user_id", referencedColumnName = "id", nullable = true)
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity = "Comment", mappedBy = "task")
+     */
+    private $comments;
 
 
     /**
@@ -204,5 +208,53 @@ class Task
     public function getIsDone()
     {
         return $this->isDone;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \TaskPlannerBundle\Entity\Category $category
+     *
+     * @return Task
+     */
+    public function setCategory(\TaskPlannerBundle\Entity\Category $category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \TaskPlannerBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \TaskPlannerBundle\Entity\User $user
+     *
+     * @return Task
+     */
+    public function setUser(\TaskPlannerBundle\Entity\User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \TaskPlannerBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

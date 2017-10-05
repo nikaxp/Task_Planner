@@ -7,9 +7,12 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\ORM\EntityRepository;
 
 class TaskType extends AbstractType
 {
+
     /**
      * {@inheritdoc}
      */
@@ -22,8 +25,13 @@ class TaskType extends AbstractType
             ->add('isDone')
             ->add('category', EntityType::class, array(
                 'class' => 'TaskPlannerBundle:Category',
-                'choice_label' => 'name'
-            ))
+                'choice_label' => 'name',
+                'query_builder' => function(EntityRepository $repo) use($options) {
+                    $findUser = $repo->createQueryBuilder('category')
+                        ->where('category.user = :user');
+                    return $findUser->setParameter('user', $options['user']);
+                }
+                ))
             ->add('save', SubmitType::class);
     }
     
@@ -33,7 +41,8 @@ class TaskType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'TaskPlannerBundle\Entity\Task'
+            'data_class' => 'TaskPlannerBundle\Entity\Task',
+            'user' => 'TaskPlannerBundle\Entity\User'
         ));
     }
 

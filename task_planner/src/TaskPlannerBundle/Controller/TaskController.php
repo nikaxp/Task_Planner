@@ -11,6 +11,9 @@ use TaskPlannerBundle\Entity\Category;
 use Symfony\Component\Form\Form;
 use TaskPlannerBundle\Entity\Task;
 use TaskPlannerBundle\Form\TaskType;
+use TaskPlannerBundle\Entity\Comment;
+use TaskPlannerBundle\Form\CommentType;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class TaskController
@@ -27,7 +30,8 @@ class TaskController extends Controller
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task, array(
-            'action' => $this->generateUrl('newTask')
+            'action' => $this->generateUrl('newTask'),
+            'user' => $this->getUser()
         ));
         $form->handleRequest($request);
 
@@ -166,12 +170,22 @@ class TaskController extends Controller
         $repo = $this->getDoctrine()->getRepository('TaskPlannerBundle:Task');
         $task = $repo->find($id);
 
+        $comments = $task->getComments();
+
         if($task) {
             $this->denyAccessUnlessGranted('view', $task);
 
+            $comment = new Comment();
+            $form = $this->createForm(CommentType::class, $comment, array(
+                'action' => $this->generateUrl('newComment', array(
+                'taskId' => $id
+                ))
+            ));
 
             return $this->render('TaskPlannerBundle:Task:show.html.twig', array(
                 'task' => $task,
+                'form' => $form->createView(),
+                'comments' => $comments
             ));
 
         }

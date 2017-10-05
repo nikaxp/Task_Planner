@@ -35,7 +35,7 @@ class Task
      * @ORM\Column(name="description", type="text", nullable = true)
      * @Assert\Length(
      *     max = 600,
-     *     maxMessage = "Description is too long. It shoul have {{ limit }} characters or less."
+     *     maxMessage = "Description is too long. It should have {{ limit }} characters or less."
      * )
      */
     private $description;
@@ -74,6 +74,10 @@ class Task
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity = "Comment", mappedBy = "task")
+     */
+    private $comments;
 
 
     /**
@@ -252,5 +256,46 @@ class Task
     public function getUser()
     {
         return $this->user;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add comment
+     *
+     * @param \TaskPlannerBundle\Entity\Comment $comment
+     *
+     * @return Task
+     */
+    public function addComment(\TaskPlannerBundle\Entity\Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \TaskPlannerBundle\Entity\Comment $comment
+     */
+    public function removeComment(\TaskPlannerBundle\Entity\Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

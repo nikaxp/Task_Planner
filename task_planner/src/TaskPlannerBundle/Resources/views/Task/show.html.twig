@@ -13,8 +13,19 @@
         <p><b>Description:</b> {{ task.description }}</p>
         <p><b>Deadline:</b> {{ task.deadline|date('Y-m-d H:i:s') }}</p>
         <p><b>Priority:</b> {{ task.priority }}</p>
-        {#<p><b>Category:</b> {{ task.category }}</p>#}
         <a href="{{ path('editTask', {'id': task.id}) }}">Edit</a><br>
+    </div>
+    <div>
+        {% for c in comments %}
+            <p><small>{{ c.added|date('Y-m-d H:i:s') }}</small> <strong>{{ c.text }}</strong> </p>
+        {% endfor %}
+    </div>
+
+
+    <div>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
     </div>
     <div>
         <button class = "btn "
