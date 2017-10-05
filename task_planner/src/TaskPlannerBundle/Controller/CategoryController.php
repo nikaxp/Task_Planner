@@ -85,6 +85,8 @@ class CategoryController extends Controller
         $category = $repo->find($id);
 
         if($category) {
+            $this->denyAccessUnlessGranted('view', $category);
+
 
             return $this->render('TaskPlannerBundle:Category:show.html.twig', array(
                 'category' => $category,
@@ -107,6 +109,8 @@ class CategoryController extends Controller
         $category = $repo->find($id);
 
         if($category) {
+            $this->denyAccessUnlessGranted('edit', $category);
+
             $form = $this->createForm(CategoryType::class, $category, array(
                 'action' => $this->generateUrl('editCategory', array('id' => $id))
             ));
@@ -163,6 +167,8 @@ class CategoryController extends Controller
         $category = $repo->find($id);
 
         if($category) {
+            $this->denyAccessUnlessGranted('edit', $category);
+
             $nameOfCategory = $category->getName();
 
             $em = $this->getDoctrine()->getManager();

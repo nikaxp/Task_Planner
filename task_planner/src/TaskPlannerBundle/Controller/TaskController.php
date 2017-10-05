@@ -74,6 +74,8 @@ class TaskController extends Controller
         $task = $repo->find($id);
 
         if($task) {
+            $this->denyAccessUnlessGranted('edit', $task);
+
             $form = $this->createForm(TaskType::class, $task, array(
                 'action' => $this->generateUrl('editTask', array('id' => $id))
             ));
@@ -131,6 +133,8 @@ class TaskController extends Controller
         $task = $repo->find($id);
 
         if($task) {
+            $this->denyAccessUnlessGranted('edit', $task);
+
 
             $em = $this->getDoctrine()->getManager();
             $em->remove($task);
@@ -163,6 +167,8 @@ class TaskController extends Controller
         $task = $repo->find($id);
 
         if($task) {
+            $this->denyAccessUnlessGranted('view', $task);
+
 
             return $this->render('TaskPlannerBundle:Task:show.html.twig', array(
                 'task' => $task,
