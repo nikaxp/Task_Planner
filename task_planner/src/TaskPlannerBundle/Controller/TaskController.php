@@ -53,7 +53,7 @@ class TaskController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             $task = $form->getData();
-            var_dump($request->request->all());
+            var_dump($task);
             $task->setUser($user);
 //            $repo = $this->getDoctrine()->getRepository('TaskPlannerBundle:Category');
 //            $category = $repo->find($request->request->get('category');
