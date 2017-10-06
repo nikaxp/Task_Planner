@@ -1,11 +1,75 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}My task planner {% endblock %}
-
+{% block title %}My task planner{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/mainpage.css')}}">
+{% endblock %}
 {% block body %}
-    <table>
-        <th>
-
-        </th>
+    <a href="{{ path('fos_user_security_logout') }}">
+        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+    </a>
+    {% if done == 0 %}
+        <h1>TO DO:</h1>
+    {% elseif done == 1 %}
+        <h1>DONE:</h1>
+    {% endif %}
+    <table class = "mainTable">
+        <thead>
+        <tr>
+        <td><strong>Task</strong></td>
+        <td><strong>Deadline</strong></td>
+        <td><strong>Comments</strong></td>
+        <td><strong>Show</strong></td>
+        <td><strong>Edit</strong></td>
+        <td><strong>Change status</strong></td>
+        <td><strong>Delete</strong></td>
+        </tr>
+        {% for t in tasks | sortbyfield('deadline') %}
+            <tr>
+                <td>{{ t.name }}</td>
+                <td>{{ t.deadline|date('Y-m-d H') }}</td>
+                <td>{{ t.comments|length }}</td>
+                <td><button class = "btn btn-sm"
+                            onclick = "window.location.href='{{ path('showTask', {'id': t.getId()}) }}' "
+                            type="button"
+                    ></button></td>
+                <td><button class = "btn btn-sm"
+                            onclick = "window.location.href='{{ path('editTask', {'id': t.getId()}) }}' "
+                            type="button"
+                    ></button></td>
+                <td><input type="checkbox" onchange = "window.location.href='{{ path('changeStatus', {'id': t.getId()}) }}'"></td>
+                <td><button class = "btn btn-sm"
+                            onclick = "window.location.href='{{ path('deleteTask', {'id': t.getId()}) }}' "
+                    >x</button></td>
+            </tr>
+        {% endfor %}
+        </thead>
     </table>
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary"
+                onclick = "window.location.href='{{ path('showAllCategories') }}' ">
+            Show all categories</button>
+        <button type="button" class="btn btn-primary"
+                onclick = "window.location.href='{{ path('showAllTasks') }}' ">
+            Show all tasks</button>
+        {% if done == 0 %}
+            <button type="button" class="btn btn-primary"
+                    onclick = "window.location.href='{{ path('mainDone') }}' "
+            >Done tasks</button>
+        {% elseif done == 1 %}
+            <button type="button" class="btn btn-primary"
+                    onclick = "window.location.href='{{ path('mainNotDone') }}' "
+            >Tasks to do</button>
+        {% endif %}
+    </div>
+        <button type="button" class="btn btn-primary"
+                onclick = "window.location.href='{{ path('mail', {'n':0}) }}' "
+        >Send email with tasks to do</button>
+        <button type="button" class="btn btn-primary"
+                onclick = "window.location.href='{{ path('mail', {'n':1}) }}' "
+        >Send email with tasks done</button>
+
+
+
 {% endblock %}

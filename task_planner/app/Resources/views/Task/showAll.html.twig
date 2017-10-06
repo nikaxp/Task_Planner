@@ -1,0 +1,57 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}All Tasks{% endblock %}
+{% block body %}
+    <ul>
+    {% for t in tasks %}
+        {% if t.isDone == false %}
+            <h4><b> TO DO: </b></h4>
+            <li>
+                <a href="{{ path('showTask', {'id': t.getId()}) }}"><strong>{{ t.getName() }}</strong></a>
+
+                <button class = "btn btn-sm"
+                        onclick = "window.location.href='{{ path('editTask', {'id': t.getId()}) }}' "
+                        type="button"
+                >Edit</button>
+
+                <button class = "btn btn-sm"
+                        onclick = "window.location.href='{{ path('deleteTask', {'id': t.getId()}) }}' "
+                >Delete</button>
+                {{ t.comments|length }} comments.
+            </li>
+        {% elseif t.isDone == true %}
+            <h4><b> DONE: </b></h4>
+            <li>
+                <a href="{{ path('showTask', {'id': t.getId()}) }}"><strong>{{ t.getName() }}</strong></a>
+
+                <button class = "btn btn-sm"
+                        onclick = "window.location.href='{{ path('editTask', {'id': t.getId()}) }}' "
+                        type="button"
+                >Edit</button>
+
+                <button class = "btn btn-sm"
+                        onclick = "window.location.href='{{ path('deleteTask', {'id': t.getId()}) }}' "
+                >Delete</button>
+                {{ t.comments|length }} comments.
+            </li>
+        {% endif %}
+    {% else %}
+        Sorry, there's no tasks :(
+    {% endfor %}
+</ul>
+    <div>
+        <button class = "btn btn-xs"
+                onclick = "window.location.href='{{ path('newTask') }}' "
+                type="button"
+        >New task</button>
+    </div>
+    <div>
+        <button class = "btn btn-xs"
+                onclick = "window.location.href='{{ path('mainDone') }}' "
+                type="button"
+        >Back to main page</button>
+    </div>
+    {% include 'ADesignsCalendarBundle::calendar.html.twig' %}
+{% endblock %}
+
+

@@ -9,6 +9,11 @@
         <a href="{{ path('editCategory', {'id': category.id}) }}">Edit</a><br>
     </div>
     <div>
+        {% for t in tasks %}
+            {{ t.getName() }} MAMA
+        {% endfor %}
+    </div>
+    <div>
     <button class = "btn "
             onclick = "window.location.href='{{ path('showAllCategories') }}' "
             type="button"

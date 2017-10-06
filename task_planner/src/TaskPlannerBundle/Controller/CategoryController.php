@@ -84,12 +84,15 @@ class CategoryController extends Controller
         $repo = $this->getDoctrine()->getRepository('TaskPlannerBundle:Category');
         $category = $repo->find($id);
 
+        $tasks = $category->getTasks();
+//        var_dump($tasks);
         if($category) {
             $this->denyAccessUnlessGranted('view', $category);
 
 
             return $this->render('TaskPlannerBundle:Category:show.html.twig', array(
                 'category' => $category,
+                'tasks' => $tasks
             ));
 
         }

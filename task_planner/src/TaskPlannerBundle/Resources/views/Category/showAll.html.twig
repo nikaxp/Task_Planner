@@ -2,6 +2,21 @@
 
 {% block title %}All Categories{% endblock %}
 {% block body %}
+    <a href="{{ path('fos_user_security_logout') }}">
+        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+    </a>
+    <div>
+        <button class = "btn btn-xs"
+                onclick = "window.location.href='{{ path('mainNotDone') }}' "
+                type="button"
+        >Back to main page</button>
+    </div>
+    <div>
+        <button class = "btn btn-xs btn-success"
+                onclick = "window.location.href='{{ path('newCategory') }}' "
+                type="button"
+        >New category</button>
+    </div>
 <ul>
     {% for c in categories %}
         <li>
@@ -22,11 +37,5 @@
         Sorry, there's no categories :(
     {% endfor %}
 </ul>
-    <div>
-        <button class = "btn btn-xs btn-success"
-                onclick = "window.location.href='{{ path('newCategory') }}' "
-                type="button"
-        >New category</button>
-    </div>
 {% endblock %}
 

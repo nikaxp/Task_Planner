@@ -14,6 +14,7 @@ use TaskPlannerBundle\Form\TaskType;
 use TaskPlannerBundle\Entity\Comment;
 use TaskPlannerBundle\Form\CommentType;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\MonologBundle\SwiftMailer;
 
 /**
  * Class TaskController
@@ -52,7 +53,13 @@ class TaskController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             $task = $form->getData();
+            var_dump($request->request->all());
             $task->setUser($user);
+//            $repo = $this->getDoctrine()->getRepository('TaskPlannerBundle:Category');
+//            $category = $repo->find($request->request->get('category');
+
+  //          $task->setCategory($category);
+
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($task);
@@ -193,4 +200,26 @@ class TaskController extends Controller
         return new Response("Task not found");
     }
 
-}
+
+    /**
+     * @Route("/{id}/change", name = "changeStatus")
+     * @Method("GET")
+     */
+    public function changeStatusAction(Request $request, $id)
+    {
+        $repo = $this->getDoctrine()->getRepository('TaskPlannerBundle:Task');
+        $task = $repo->find($id);
+
+        if ($task && $task->getIsDone() == false) {
+            $task->setIsDone(true);
+        }elseif($task && $task->getIsDone() == true) {
+            $task->setIsDone(false);
+        }
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            return $this->redirectToRoute('mainNotDone');
+    }
+
+
+
+    }

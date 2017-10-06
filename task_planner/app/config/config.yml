@@ -68,6 +68,8 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+    auth_mode: login
+    encryption: ssl
 
 fos_user:
     db_driver: orm
@@ -76,4 +78,6 @@ fos_user:
     from_email:
         address: example@example.pl
         sender_name: example
-
+services:
+    fos_user.doctrine_registry:
+        alias: doctrine
